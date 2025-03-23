@@ -1,5 +1,5 @@
 # 构建阶段
-FROM python:3.9-slim as builder
+FROM python:3.9-slim AS builder
 
 # 设置工作目录
 WORKDIR /app
@@ -8,6 +8,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
+    gcc \
+    python3-dev \
+    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖文件
