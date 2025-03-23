@@ -65,6 +65,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            BUILD_DATE=${{ steps.meta.outputs.created }}
-            VCS_REF=${{ github.sha }}
-            VERSION=${{ steps.meta.outputs.version }}
+            BUILDKIT_INLINE_CACHE=1
+            MAKEFLAGS=-j$(nproc)

@@ -9,8 +9,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     gcc \
+    g++ \
+    make \
     python3-dev \
     libffi-dev \
+    libuv1-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖文件
