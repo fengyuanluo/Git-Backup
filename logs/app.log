@@ -1,0 +1,212 @@
+2025-03-15 13:10:24 - git_backup - INFO - 成功加载 1 个任务
+2025-03-15 13:10:24 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-15 13:10:24 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-15 13:10:24 - git_backup - INFO - 启动Git备份系统
+2025-03-15 13:10:24 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-15 13:10:24 - git_backup - INFO - 成功加载 1 个任务
+2025-03-15 13:10:24 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-15 13:10:24 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-15 13:10:24 - git_backup - INFO - 启动Git备份系统
+2025-03-15 13:10:24 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-15 13:15:12 - git_backup - INFO - 成功加载 1 个任务
+2025-03-15 13:15:12 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-15 13:15:12 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-15 13:15:12 - git_backup - INFO - 启动Git备份系统
+2025-03-15 13:15:12 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-15 13:15:13 - git_backup - INFO - 成功加载 1 个任务
+2025-03-15 13:15:13 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-15 13:15:13 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-15 13:15:13 - git_backup - INFO - 启动Git备份系统
+2025-03-15 13:15:13 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:22:39 - git_backup - INFO - 成功加载 1 个任务
+2025-03-16 13:22:39 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-16 13:22:39 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-16 13:22:39 - git_backup - INFO - 启动Git备份系统
+2025-03-16 13:22:39 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:22:40 - git_backup - INFO - 成功加载 1 个任务
+2025-03-16 13:22:40 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-16 13:22:40 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-16 13:22:40 - git_backup - INFO - 启动Git备份系统
+2025-03-16 13:22:40 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:25:02 - git_backup - INFO - Client connected
+2025-03-16 13:25:06 - git_backup.restore - INFO - 开始获取任务 1 的提交历史 (页码: 1, 每页数量: 10)
+2025-03-16 13:25:06 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 开始获取提交历史...
+2025-03-16 13:25:06 - git_backup.restore - DEBUG - 任务目录路径: /root/Git备份/backups/task_1
+2025-03-16 13:25:06 - git_backup.restore - WARNING - 任务目录不存在: /root/Git备份/backups/task_1
+2025-03-16 13:25:06 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: error, 消息: 任务目录不存在
+2025-03-16 13:25:55 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:25:55 - git_backup - INFO - 开始备份任务: 备份 (/root/测试)
+2025-03-16 13:25:55 - git_backup - INFO - 已配置Personal Access Token认证
+2025-03-16 13:25:55 - git_backup - INFO - 没有检测到需要备份的更改
+2025-03-16 13:25:58 - git_backup - INFO - Webhook通知发送成功
+2025-03-16 13:26:08 - git_backup.restore - INFO - 开始获取任务 1 的提交历史 (页码: 1, 每页数量: 10)
+2025-03-16 13:26:08 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 开始获取提交历史...
+2025-03-16 13:26:08 - git_backup.restore - DEBUG - 任务目录路径: /root/Git备份/backups/task_1
+2025-03-16 13:26:08 - git_backup.restore - WARNING - 任务目录不存在: /root/Git备份/backups/task_1
+2025-03-16 13:26:08 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: error, 消息: 任务目录不存在
+2025-03-16 13:29:19 - git_backup - INFO - 成功加载 1 个任务
+2025-03-16 13:29:19 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-16 13:29:19 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-16 13:29:19 - git_backup - INFO - 启动Git备份系统
+2025-03-16 13:29:19 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:29:20 - git_backup - INFO - 成功加载 1 个任务
+2025-03-16 13:29:20 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-16 13:29:20 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-16 13:29:20 - git_backup - INFO - 启动Git备份系统
+2025-03-16 13:29:20 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:29:20 - git_backup - INFO - Client connected
+2025-03-16 13:29:27 - git_backup.restore - INFO - 开始获取任务 1 的提交历史 (页码: 1, 每页数量: 10)
+2025-03-16 13:29:27 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 开始获取提交历史...
+2025-03-16 13:29:27 - git_backup.restore - DEBUG - 任务源目录路径: /root/测试
+2025-03-16 13:29:27 - git_backup.restore - DEBUG - Git仓库已加载: /root/测试/.git
+2025-03-16 13:29:27 - git_backup.restore - INFO - 正在从远程仓库获取更新...
+2025-03-16 13:29:27 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在从远程仓库获取更新...
+2025-03-16 13:31:38 - git_backup.restore - WARNING - 获取远程仓库更新失败: Cmd('git') failed due to: exit code(128)
+  cmdline: git fetch --all
+  stderr: 'fatal: unable to access 'https://github.com/fengyuanluo/NAS/': Failed to connect to github.com port 443 after 131147 ms: Couldn't connect to server'
+2025-03-16 13:31:38 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: warning, 消息: 获取远程仓库更新失败: Cmd('git') failed due to: exit code(128)
+  cmdline: git fetch --all
+  stderr: 'fatal: unable to access 'https://github.com/fengyuanluo/NAS/': Failed to connect to github.com port 443 after 131147 ms: Couldn't connect to server'
+2025-03-16 13:31:38 - git_backup.restore - INFO - 当前分支: main
+2025-03-16 13:31:38 - git_backup.restore - INFO - 正在获取远程分支 main 的提交历史...
+2025-03-16 13:31:38 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在获取远程分支 main 的提交历史...
+2025-03-16 13:31:38 - git_backup.restore - DEBUG - 远程引用: origin/main
+2025-03-16 13:31:38 - git_backup.restore - ERROR - 获取远程提交历史失败: Cmd('git') failed due to: exit code(128)
+  cmdline: git rev-list origin/main --
+  stderr: 'fatal: bad revision 'origin/main'
+'
+2025-03-16 13:31:38 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: warning, 消息: 获取远程提交历史失败，尝试获取本地提交历史: Cmd('git') failed due to: exit code(128)
+  cmdline: git rev-list origin/main --
+  stderr: 'fatal: bad revision 'origin/main'
+'
+2025-03-16 13:31:38 - git_backup.restore - INFO - 尝试获取本地提交历史...
+2025-03-16 13:31:38 - git_backup.restore - DEBUG - 获取到本地提交: 227546f9 - Backup at 2025-03-13 09:35:17
+2025-03-16 13:31:38 - git_backup.restore - DEBUG - 获取到本地提交: 64bbc5e4 - Backup at 2025-03-13 04:19:46
+2025-03-16 13:31:38 - git_backup.restore - DEBUG - 获取到本地提交: 2049fa1f - Initial commit at 2025-03-13 02:47:48
+2025-03-16 13:31:38 - git_backup.restore - INFO - 成功获取到 3 个本地提交
+2025-03-16 13:31:38 - git_backup.restore - INFO - 成功获取提交历史，当前页: 1/1, 总提交数: 3
+2025-03-16 13:31:38 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: success, 消息: 成功获取提交历史，共 3 个提交
+2025-03-16 13:31:38 - git_backup - INFO - Client disconnected
+2025-03-16 13:31:38 - git_backup - INFO - Client connected
+2025-03-16 13:35:12 - git_backup.restore - INFO - 开始获取任务 1 的提交历史 (页码: 1, 每页数量: 10)
+2025-03-16 13:35:12 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 开始获取提交历史...
+2025-03-16 13:35:12 - git_backup.restore - DEBUG - 任务源目录路径: /root/测试
+2025-03-16 13:35:12 - git_backup.restore - DEBUG - Git仓库已加载: /root/测试/.git
+2025-03-16 13:35:12 - git_backup.restore - INFO - 正在从远程仓库获取更新...
+2025-03-16 13:35:12 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在从远程仓库获取更新...
+2025-03-16 13:35:13 - git_backup.restore - INFO - 远程仓库更新成功
+2025-03-16 13:35:13 - git_backup.restore - INFO - 当前分支: main
+2025-03-16 13:35:13 - git_backup.restore - INFO - 正在获取远程分支 main 的提交历史...
+2025-03-16 13:35:13 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在获取远程分支 main 的提交历史...
+2025-03-16 13:35:13 - git_backup.restore - DEBUG - 远程引用: origin/main
+2025-03-16 13:35:13 - git_backup.restore - DEBUG - 获取到提交: 227546f9 - Backup at 2025-03-13 09:35:17
+2025-03-16 13:35:13 - git_backup.restore - DEBUG - 获取到提交: 64bbc5e4 - Backup at 2025-03-13 04:19:46
+2025-03-16 13:35:13 - git_backup.restore - DEBUG - 获取到提交: 2049fa1f - Initial commit at 2025-03-13 02:47:48
+2025-03-16 13:35:13 - git_backup.restore - INFO - 成功获取到 3 个提交
+2025-03-16 13:35:13 - git_backup.restore - INFO - 成功获取提交历史，当前页: 1/1, 总提交数: 3
+2025-03-16 13:35:13 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: success, 消息: 成功获取提交历史，共 3 个提交
+2025-03-16 13:35:23 - git_backup.restore - INFO - 开始还原任务 1 到提交 2049fa1f16f4d4fbe736418c3158a9f7df3f5f17
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 开始还原到提交 2049fa1f...
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - 任务源目录路径: /root/测试
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - Git仓库已加载: /root/测试/.git
+2025-03-16 13:35:23 - git_backup.restore - INFO - 找到提交: Initial commit at 2025-03-13 02:47:48
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - 提交详情: 作者=root, 日期=2025-03-13 02:47:48+00:00
+2025-03-16 13:35:23 - git_backup.restore - INFO - 正在执行还原操作...
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在执行还原操作...
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - 已执行git reset --hard
+2025-03-16 13:35:23 - git_backup.restore - INFO - 正在清理未跟踪的文件...
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在清理未跟踪的文件...
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - 已执行git clean -fd
+2025-03-16 13:35:23 - git_backup.restore - INFO - 成功还原到提交 2049fa1f16f4d4fbe736418c3158a9f7df3f5f17
+2025-03-16 13:35:23 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: success, 消息: 成功还原到提交 2049fa1f16f4d4fbe736418c3158a9f7df3f5f17
+2025-03-16 13:37:34 - git_backup - INFO - Webhook通知发送成功
+2025-03-16 13:37:34 - git_backup - INFO - Client disconnected
+2025-03-16 13:37:52 - git_backup - INFO - Client connected
+2025-03-16 13:43:52 - git_backup - INFO - 成功加载 1 个任务
+2025-03-16 13:43:52 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-16 13:43:52 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-16 13:43:52 - git_backup - INFO - 启动Git备份系统
+2025-03-16 13:43:52 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:43:53 - git_backup - INFO - 成功加载 1 个任务
+2025-03-16 13:43:53 - git_backup.restore - INFO - 初始化还原管理器，基础目录: /root/Git备份/backups
+2025-03-16 13:43:53 - git_backup.restore - INFO - WebSocket实例已设置
+2025-03-16 13:43:53 - git_backup - INFO - 启动Git备份系统
+2025-03-16 13:43:53 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:43:53 - git_backup - INFO - Client connected
+2025-03-16 13:44:03 - git_backup - INFO - Client disconnected
+2025-03-16 13:44:03 - git_backup - INFO - Client connected
+2025-03-16 13:44:05 - git_backup.restore - INFO - 开始获取任务 1 的提交历史 (页码: 1, 每页数量: 10)
+2025-03-16 13:44:05 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 开始获取提交历史...
+2025-03-16 13:44:05 - git_backup.restore - DEBUG - 任务源目录路径: /root/测试
+2025-03-16 13:44:05 - git_backup.restore - DEBUG - Git仓库已加载: /root/测试/.git
+2025-03-16 13:44:05 - git_backup.restore - INFO - 正在从远程仓库获取更新...
+2025-03-16 13:44:05 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在从远程仓库获取更新...
+2025-03-16 13:46:02 - git_backup.restore - WARNING - 获取远程仓库更新失败: Cmd('git') failed due to: exit code(128)
+  cmdline: git fetch --all
+  stderr: 'fatal: unable to access 'https://github.com/fengyuanluo/NAS/': gnutls_handshake() failed: The TLS connection was non-properly terminated.'
+2025-03-16 13:46:02 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: warning, 消息: 获取远程仓库更新失败: Cmd('git') failed due to: exit code(128)
+  cmdline: git fetch --all
+  stderr: 'fatal: unable to access 'https://github.com/fengyuanluo/NAS/': gnutls_handshake() failed: The TLS connection was non-properly terminated.'
+2025-03-16 13:46:02 - git_backup.restore - INFO - 当前分支: main
+2025-03-16 13:46:02 - git_backup.restore - INFO - 正在获取远程分支 main 的提交历史...
+2025-03-16 13:46:02 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在获取远程分支 main 的提交历史...
+2025-03-16 13:46:02 - git_backup.restore - DEBUG - 远程引用: origin/main
+2025-03-16 13:46:02 - git_backup.restore - DEBUG - 获取到提交: 227546f9 - Backup at 2025-03-13 09:35:17
+2025-03-16 13:46:02 - git_backup.restore - DEBUG - 获取到提交: 64bbc5e4 - Backup at 2025-03-13 04:19:46
+2025-03-16 13:46:02 - git_backup.restore - DEBUG - 获取到提交: 2049fa1f - Initial commit at 2025-03-13 02:47:48
+2025-03-16 13:46:02 - git_backup.restore - INFO - 成功获取到 3 个提交
+2025-03-16 13:46:02 - git_backup.restore - INFO - 成功获取提交历史，当前页: 1/1, 总提交数: 3
+2025-03-16 13:46:02 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: success, 消息: 成功获取提交历史，共 3 个提交
+2025-03-16 13:46:02 - git_backup - INFO - Client disconnected
+2025-03-16 13:46:02 - git_backup - INFO - Client connected
+2025-03-16 13:55:10 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:55:10 - git_backup - INFO - 开始备份任务: 备份 (/root/测试)
+2025-03-16 13:55:10 - git_backup - INFO - 已配置Personal Access Token认证
+2025-03-16 13:55:10 - git_backup - INFO - 创建提交: Backup at 2025-03-16 13:55:10
+2025-03-16 13:55:10 - git_backup - INFO - 尝试推送更改 (尝试 1/3)
+2025-03-16 13:55:13 - git_backup - INFO - 成功推送到远程仓库
+2025-03-16 13:55:15 - git_backup - INFO - Webhook通知发送成功
+2025-03-16 13:57:48 - git_backup.restore - INFO - 开始获取任务 1 的提交历史 (页码: 1, 每页数量: 10)
+2025-03-16 13:57:48 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 开始获取提交历史...
+2025-03-16 13:57:48 - git_backup.restore - DEBUG - 任务源目录路径: /root/测试
+2025-03-16 13:57:48 - git_backup.restore - DEBUG - Git仓库已加载: /root/测试/.git
+2025-03-16 13:57:48 - git_backup.restore - INFO - 正在从远程仓库获取更新...
+2025-03-16 13:57:48 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在从远程仓库获取更新...
+2025-03-16 13:57:51 - git_backup.restore - INFO - 远程仓库更新成功
+2025-03-16 13:57:51 - git_backup.restore - INFO - 当前分支: main
+2025-03-16 13:57:51 - git_backup.restore - INFO - 正在获取远程分支 main 的提交历史...
+2025-03-16 13:57:51 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: info, 消息: 正在获取远程分支 main 的提交历史...
+2025-03-16 13:57:51 - git_backup.restore - DEBUG - 远程引用: origin/main
+2025-03-16 13:57:51 - git_backup.restore - DEBUG - 获取到提交: 009ccce3 - Backup at 2025-03-16 13:55:10
+2025-03-16 13:57:51 - git_backup.restore - DEBUG - 获取到提交: 2049fa1f - Initial commit at 2025-03-13 02:47:48
+2025-03-16 13:57:51 - git_backup.restore - INFO - 成功获取到 2 个提交
+2025-03-16 13:57:51 - git_backup.restore - INFO - 成功获取提交历史，当前页: 1/1, 总提交数: 2
+2025-03-16 13:57:51 - git_backup.restore - DEBUG - 发送状态更新 - 任务ID: 1, 状态: success, 消息: 成功获取提交历史，共 2 个提交
+2025-03-16 13:58:36 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 13:58:36 - git_backup - INFO - 开始备份任务: 备份 (/root/测试)
+2025-03-16 13:58:36 - git_backup - INFO - 已配置Personal Access Token认证
+2025-03-16 13:58:36 - git_backup - INFO - 创建提交: Backup at 2025-03-16 13:58:36
+2025-03-16 13:58:36 - git_backup - INFO - 尝试推送更改 (尝试 1/3)
+2025-03-16 13:58:38 - git_backup - INFO - 成功推送到远程仓库
+2025-03-16 14:00:50 - git_backup - INFO - Webhook通知发送成功
+2025-03-16 14:00:50 - git_backup - INFO - Client disconnected
+2025-03-16 14:00:50 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 14:00:50 - git_backup - INFO - 开始备份任务: 备份 (/root/测试)
+2025-03-16 14:00:50 - git_backup - INFO - 已配置Personal Access Token认证
+2025-03-16 14:00:50 - git_backup - INFO - 创建提交: Backup at 2025-03-16 14:00:50
+2025-03-16 14:00:50 - git_backup - INFO - 尝试推送更改 (尝试 1/3)
+2025-03-16 14:03:00 - git_backup - WARNING - 推送失败，将重试: Cmd('git') failed due to: exit code(128)
+  cmdline: git push origin main --force
+  stderr: 'fatal: unable to access 'https://github.com/fengyuanluo/NAS/': Failed to connect to github.com port 443 after 129736 ms: Couldn't connect to server'
+2025-03-16 14:03:02 - git_backup - INFO - 尝试推送更改 (尝试 2/3)
+2025-03-16 14:05:13 - git_backup - WARNING - 推送失败，将重试: Cmd('git') failed due to: exit code(128)
+  cmdline: git push origin main --force
+  stderr: 'fatal: unable to access 'https://github.com/fengyuanluo/NAS/': Failed to connect to github.com port 443 after 131092 ms: Couldn't connect to server'
+2025-03-16 14:05:15 - git_backup - INFO - 尝试推送更改 (尝试 3/3)
+2025-03-16 14:05:17 - git_backup - INFO - 成功推送到远程仓库
+2025-03-16 14:07:30 - git_backup - INFO - Webhook通知发送成功
+2025-03-16 14:07:30 - git_backup - INFO - Git version: git version 2.39.5
+2025-03-16 14:07:30 - git_backup - INFO - 开始备份任务: 备份 (/root/测试)
+2025-03-16 14:07:30 - git_backup - INFO - 已配置Personal Access Token认证
+2025-03-16 14:07:30 - git_backup - INFO - 没有检测到需要备份的更改
+2025-03-16 14:08:38 - git_backup - ERROR - Webhook通知发送失败: invalid webhook url, hint: [1742134117104520728143612], from ip: 140.245.56.235, more info at https://open.work.weixin.qq.com/devtool/query?e=93000

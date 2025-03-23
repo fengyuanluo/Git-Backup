@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git备份任务管理</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #2c3e50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: bold;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background-color: #3498db;
+            border-color: #3498db;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        .table {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .modal-content {
+            border-radius: 10px;
+        }
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.2rem rgba(52,152,219,0.25);
+        }
+        .task-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
+        }
+        .status-enabled {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-disabled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .btn-icon {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1060;
+        }
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+        }
+        .task-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .task-name {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .task-path {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        .auth-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .schedule-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .webhook-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-git me-2"></i>Git备份任务管理
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="addTaskBtn">
+                            <i class="bi bi-plus-circle me-1"></i>添加任务
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">
+                            <i class="bi bi-box-arrow-right me-1"></i>退出
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container">
+        <!-- 任务列表 -->
+        <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">
+                    <i class="bi bi-list-task me-2"></i>任务列表
+                        </h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                <th>任务名称</th>
+                                        <th>源文件夹</th>
+                                        <th>远程仓库</th>
+                                <th>计划任务</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="taskList">
+                                    {% for task in tasks %}
+                            <tr>
+                                        <td>
+                                    <div class="task-name">{{ task.name }}</div>
+                                    <div class="task-path text-muted small">{{ task.source_path }}</div>
+                                        </td>
+                                <td>{{ task.source_path }}</td>
+                                <td>{{ task.remote_url }}</td>
+                                <td>{{ task.schedule or '无' }}</td>
+                                <td>
+                                    <span class="task-status {% if task.enabled %}status-enabled{% else %}status-disabled{% endif %}">
+                                        {{ '启用' if task.enabled else '禁用' }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                    <div class="task-actions">
+                                        <button class="btn btn-sm btn-outline-primary btn-icon" onclick="editTask({{ task.id }})" title="编辑">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-success btn-icon" onclick="toggleTask({{ task.id }})" title="{{ '禁用' if task.enabled else '启用' }}">
+                                            <i class="bi bi-power"></i>
+                                            </button>
+                                        <button class="btn btn-sm btn-outline-info btn-icon" onclick="runTask({{ task.id }})" title="立即执行">
+                                            <i class="bi bi-play-fill"></i>
+                                            </button>
+                                        <button class="btn btn-sm btn-outline-danger btn-icon" onclick="deleteTask({{ task.id }})" title="删除">
+                                            <i class="bi bi-trash"></i>
+                                            </button>
+                                    </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加任务模态框 -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-plus-circle me-2"></i>添加备份任务
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTaskForm">
+                        <!-- 基本信息 -->
+                        <div class="mb-3">
+                            <label class="form-label">任务名称</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">源文件夹</label>
+                            <input type="text" class="form-control" name="source_path" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">远程仓库URL</label>
+                            <input type="text" class="form-control" name="remote_url" required>
+                        </div>
+
+                        <!-- 认证方式 -->
+                        <div class="auth-section">
+                            <h6 class="mb-3">认证方式</h6>
+                            <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="auth_type" id="authToken" value="token" checked>
+                                    <label class="form-check-label" for="authToken">Personal Access Token</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="auth_type" id="authSSH" value="ssh">
+                                    <label class="form-check-label" for="authSSH">SSH密钥</label>
+                                </div>
+                            </div>
+                            <div id="tokenSection">
+                                <div class="mb-3">
+                                    <label class="form-label">Access Token</label>
+                                    <input type="password" class="form-control" name="access_token">
+                                    <div class="form-text">
+                                        <a href="https://github.com/settings/tokens" target="_blank" class="text-decoration-none">
+                                            <i class="bi bi-link-45deg"></i> 获取Token
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sshSection" style="display: none;">
+                                <div class="mb-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ssh_key_type" id="sshKeyPath" value="path" checked>
+                                        <label class="form-check-label" for="sshKeyPath">使用密钥文件路径</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ssh_key_type" id="sshKeyContent" value="content">
+                                        <label class="form-check-label" for="sshKeyContent">直接输入密钥内容</label>
+                                    </div>
+                                </div>
+                                <div id="sshKeyPathSection">
+                        <div class="mb-3">
+                                        <label class="form-label">SSH密钥路径</label>
+                            <input type="text" class="form-control" name="ssh_key_path">
+                        </div>
+                                </div>
+                                <div id="sshKeyContentSection" style="display: none;">
+                        <div class="mb-3">
+                                        <label class="form-label">SSH密钥内容</label>
+                                        <textarea class="form-control" name="ssh_key_content" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 计划任务 -->
+                        <div class="schedule-section">
+                            <h6 class="mb-3">计划任务</h6>
+                            <div class="mb-3">
+                                <label class="form-label">Cron表达式</label>
+                                <input type="text" class="form-control" name="schedule" placeholder="*/30 * * * *">
+                                <div class="form-text">
+                                    <a href="https://crontab.guru/" target="_blank" class="text-decoration-none">
+                                        <i class="bi bi-link-45deg"></i> Cron表达式生成器
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" name="run_immediately" id="runImmediately">
+                                <label class="form-check-label" for="runImmediately">
+                                    立即执行一次
+                            </label>
+                            </div>
+                        </div>
+
+                        <!-- Webhook通知 -->
+                        <div class="webhook-section">
+                            <h6 class="mb-3">Webhook通知</h6>
+                        <div class="mb-3">
+                                <label class="form-label">Webhook URL</label>
+                                <input type="text" class="form-control" name="webhook_url">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="addTask()">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑任务模态框 -->
+    <div class="modal fade" id="editTaskModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-pencil me-2"></i>编辑备份任务
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTaskForm">
+                        <!-- 基本信息 -->
+                        <div class="mb-3">
+                            <label class="form-label">任务名称</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">源文件夹</label>
+                            <input type="text" class="form-control" name="source_path" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">远程仓库URL</label>
+                            <input type="text" class="form-control" name="remote_url" required>
+                        </div>
+
+                        <!-- 认证方式 -->
+                        <div class="auth-section">
+                            <h6 class="mb-3">认证方式</h6>
+                            <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="auth_type" id="editAuthToken" value="token" checked>
+                                    <label class="form-check-label" for="editAuthToken">Personal Access Token</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="auth_type" id="editAuthSSH" value="ssh">
+                                    <label class="form-check-label" for="editAuthSSH">SSH密钥</label>
+                                </div>
+                            </div>
+                            <div id="editTokenSection">
+                                <div class="mb-3">
+                                    <label class="form-label">Access Token</label>
+                                    <input type="password" class="form-control" name="access_token">
+                                    <div class="form-text">
+                                        <a href="https://github.com/settings/tokens" target="_blank" class="text-decoration-none">
+                                            <i class="bi bi-link-45deg"></i> 获取Token
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="editSshSection" style="display: none;">
+                                <div class="mb-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ssh_key_type" id="editSshKeyPath" value="path" checked>
+                                        <label class="form-check-label" for="editSshKeyPath">使用密钥文件路径</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ssh_key_type" id="editSshKeyContent" value="content">
+                                        <label class="form-check-label" for="editSshKeyContent">直接输入密钥内容</label>
+                                    </div>
+                                </div>
+                                <div id="editSshKeyPathSection">
+                                    <div class="mb-3">
+                                        <label class="form-label">SSH密钥路径</label>
+                                        <input type="text" class="form-control" name="ssh_key_path">
+                                    </div>
+                                </div>
+                                <div id="editSshKeyContentSection" style="display: none;">
+                                    <div class="mb-3">
+                                        <label class="form-label">SSH密钥内容</label>
+                                        <textarea class="form-control" name="ssh_key_content" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 计划任务 -->
+                        <div class="schedule-section">
+                            <h6 class="mb-3">计划任务</h6>
+                            <div class="mb-3">
+                                <label class="form-label">Cron表达式</label>
+                                <input type="text" class="form-control" name="schedule" placeholder="*/30 * * * *">
+                                <div class="form-text">
+                                    <a href="https://crontab.guru/" target="_blank" class="text-decoration-none">
+                                        <i class="bi bi-link-45deg"></i> Cron表达式生成器
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Webhook通知 -->
+                        <div class="webhook-section">
+                            <h6 class="mb-3">Webhook通知</h6>
+                            <div class="mb-3">
+                                <label class="form-label">Webhook URL</label>
+                                <input type="text" class="form-control" name="webhook_url">
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="updateTask()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载中遮罩 -->
+    <div class="loading">
+        <div class="spinner-border loading-spinner text-primary" role="status">
+            <span class="visually-hidden">加载中...</span>
+        </div>
+    </div>
+
+    <!-- 提示消息 -->
+    <div class="toast" role="alert">
+        <div class="toast-header">
+            <i class="bi bi-info-circle me-2"></i>
+            <strong class="me-auto">提示</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        // 初始化Socket.IO和全局变量
+        const socket = io();
+        let currentTaskId = null;
+        let addTaskModal = null;
+        let editTaskModal = null;
+
+        // DOM加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化模态框
+            addTaskModal = new bootstrap.Modal(document.getElementById('addTaskModal'));
+            editTaskModal = new bootstrap.Modal(document.getElementById('editTaskModal'));
+            
+            // 初始化表单验证
+            initFormValidation();
+            
+            // 绑定事件监听器
+            bindEventListeners();
+            
+            // 初始化提示框
+            initializeToasts();
+
+            // 初始化工具提示
+            initializeTooltips();
+
+            // 首次加载任务列表
+            updateTaskList();
+        });
+
+        // 初始化表单验证
+        function initFormValidation() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    if (!form.checkValidity()) {
+                        event.stopPropagation();
+                        showToast('请填写所有必填字段', 'error');
+                    }
+                    form.classList.add('was-validated');
+                });
+            });
+        }
+
+        // 绑定事件监听器
+        function bindEventListeners() {
+            // 添加任务按钮点击事件
+            document.getElementById('addTaskBtn').addEventListener('click', function() {
+                document.getElementById('addTaskForm').reset();
+                document.getElementById('addTaskForm').classList.remove('was-validated');
+                addTaskModal.show();
+            });
+
+            // 认证方式切换事件
+            document.querySelectorAll('input[name="auth_type"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const tokenSection = document.getElementById('tokenSection');
+                    const sshSection = document.getElementById('sshSection');
+                    const tokenInput = document.getElementById('access_token');
+                    const sshKeyPathInput = document.getElementById('ssh_key_path');
+                    const sshKeyContentInput = document.getElementById('ssh_key_content');
+                    
+                    if (this.value === 'token') {
+                        tokenSection.style.display = 'block';
+                        sshSection.style.display = 'none';
+                        tokenInput.required = true;
+                        sshKeyPathInput.required = false;
+                        sshKeyContentInput.required = false;
+                    } else {
+                        tokenSection.style.display = 'none';
+                        sshSection.style.display = 'block';
+                        tokenInput.required = false;
+                        sshKeyPathInput.required = true;
+                        sshKeyContentInput.required = true;
+                    }
+                });
+            });
+
+            // SSH密钥类型切换事件
+            document.querySelectorAll('input[name="ssh_key_type"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const prefix = this.closest('form').id.startsWith('add') ? 'add' : 'edit';
+                    toggleSshKeySection(prefix, this.value);
+                });
+            });
+
+            // 文件选择处理
+            document.getElementById('ssh_key_path').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('ssh_key_content').value = e.target.result;
+                    };
+                    reader.readAsText(file);
+                }
+            });
+        }
+
+        // 初始化提示框
+        function initializeToasts() {
+            const toastElList = document.querySelectorAll('.toast');
+            toastElList.forEach(toastEl => new bootstrap.Toast(toastEl, {
+                animation: true,
+                autohide: true,
+                delay: 3000
+            }));
+        }
+
+        // 初始化工具提示
+        function initializeTooltips() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        }
+
+        // 显示加载中
+        function showLoading() {
+            const loading = document.querySelector('.loading');
+            loading.style.display = 'flex';
+            loading.style.opacity = '0';
+            setTimeout(() => loading.style.opacity = '1', 10);
+        }
+
+        // 隐藏加载中
+        function hideLoading() {
+            const loading = document.querySelector('.loading');
+            loading.style.opacity = '0';
+            setTimeout(() => loading.style.display = 'none', 300);
+        }
+
+        // 显示提示消息
+        function showToast(message, type = 'success') {
+            const toast = document.querySelector('.toast');
+            const toastBody = toast.querySelector('.toast-body');
+            toastBody.textContent = message;
+            
+            // 设置图标和颜色
+            const icon = toast.querySelector('.bi');
+            const header = toast.querySelector('.toast-header');
+            
+            switch(type) {
+                case 'success':
+                    icon.className = 'bi bi-check-circle me-2 text-success';
+                    header.classList.remove('bg-danger', 'bg-primary');
+                    header.classList.add('bg-success', 'text-white');
+                    break;
+                case 'error':
+                    icon.className = 'bi bi-x-circle me-2 text-danger';
+                    header.classList.remove('bg-success', 'bg-primary');
+                    header.classList.add('bg-danger', 'text-white');
+                    break;
+                default:
+                    icon.className = 'bi bi-info-circle me-2 text-primary';
+                    header.classList.remove('bg-success', 'bg-danger');
+                    header.classList.add('bg-primary', 'text-white');
+            }
+            
+            const bsToast = bootstrap.Toast.getInstance(toast) || new bootstrap.Toast(toast);
+            bsToast.show();
+        }
+
+        // 切换认证方式部分
+        function toggleAuthSection(prefix, authType) {
+            const tokenSection = document.getElementById(`${prefix}TokenSection`);
+            const sshSection = document.getElementById(`${prefix}SshSection`);
+            
+            if (authType === 'token') {
+                tokenSection.style.display = 'block';
+                sshSection.style.display = 'none';
+            } else {
+                tokenSection.style.display = 'none';
+                sshSection.style.display = 'block';
+            }
+        }
+
+        // 切换SSH密钥部分
+        function toggleSshKeySection(prefix, keyType) {
+            const contentSection = document.getElementById(`${prefix}SshKeyContentSection`);
+            const pathSection = document.getElementById(`${prefix}SshKeyPathSection`);
+            
+            if (keyType === 'content') {
+                contentSection.style.display = 'block';
+                pathSection.style.display = 'none';
+            } else {
+                contentSection.style.display = 'none';
+                pathSection.style.display = 'block';
+            }
+        }
+
+        // 立即执行任务
+        async function runTask(taskId) {
+            try {
+                showLoading();
+                const response = await fetch(`/api/tasks/${taskId}/run`, {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.message || '执行任务失败');
+                }
+
+                showToast('任务已开始执行');
+            } catch (error) {
+                showToast(error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 更新任务列表
+        async function updateTaskList() {
+            try {
+                showLoading();
+                const response = await fetch('/api/tasks');
+                if (!response.ok) {
+                    throw new Error('获取任务列表失败');
+                }
+                const tasks = await response.json();
+                
+                if (!Array.isArray(tasks)) {
+                    throw new Error('获取任务列表失败：数据格式错误');
+                }
+                
+                const taskList = document.getElementById('taskList');
+                taskList.innerHTML = tasks.map(task => createTaskRow(task)).join('');
+                
+                // 重新初始化工具提示
+                initializeTooltips();
+            } catch (error) {
+                console.error('更新任务列表失败:', error);
+                showToast('更新任务列表失败: ' + error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 创建任务行
+        function createTaskRow(task) {
+            if (!task || !task.id) {
+                console.error('无效的任务数据:', task);
+                return '';
+            }
+
+            return `
+                <tr>
+                    <td>
+                        <div class="task-name">${escapeHtml(task.name || '')}</div>
+                        <div class="task-path text-muted small">${escapeHtml(task.source_path || '')}</div>
+                    </td>
+                    <td>${escapeHtml(task.source_path || '')}</td>
+                    <td>${escapeHtml(task.remote_url || '')}</td>
+                    <td>${escapeHtml(task.schedule || '无')}</td>
+                    <td>
+                        <span class="task-status ${task.enabled ? 'status-enabled' : 'status-disabled'}">
+                            ${task.enabled ? '启用' : '禁用'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="task-actions">
+                            <button class="btn btn-sm btn-outline-primary btn-icon" onclick="editTask(${task.id})" title="编辑">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-success btn-icon" onclick="toggleTask(${task.id})" title="${task.enabled ? '禁用' : '启用'}">
+                                <i class="bi bi-power"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-info btn-icon" onclick="runTask(${task.id})" title="立即执行">
+                                <i class="bi bi-play-fill"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger btn-icon" onclick="deleteTask(${task.id})" title="删除">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        // HTML转义函数
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // 添加任务
+        async function addTask() {
+            const form = document.getElementById('addTaskForm');
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                showToast('请填写所有必填字段', 'error');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const data = {};
+            
+            // 处理表单数据
+            for (const [key, value] of formData.entries()) {
+                if (value) {  // 只添加非空值
+                    data[key] = value;
+                }
+            }
+            
+            // 处理SSH密钥
+            if (data.auth_type === 'ssh') {
+                if (data.ssh_key_type === 'path') {
+                    delete data.ssh_key_content;
+                } else {
+                    delete data.ssh_key_path;
+                }
+            } else {
+                delete data.ssh_key_path;
+                delete data.ssh_key_content;
+            }
+            
+            // 处理布尔值
+            data.run_immediately = formData.get('run_immediately') === 'on';
+            
+            try {
+                showLoading();
+                const response = await fetch('/api/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.message || '添加任务失败');
+                }
+
+                showToast('任务添加成功');
+                addTaskModal.hide();
+                form.reset();
+                form.classList.remove('was-validated');
+                
+                // 立即更新任务列表
+                await updateTaskList();
+
+                // 如果设置了立即执行
+                if (data.run_immediately) {
+                    showToast('任务已开始执行', 'info');
+                }
+            } catch (error) {
+                showToast(error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 编辑任务
+        async function editTask(taskId) {
+            try {
+                showLoading();
+                currentTaskId = taskId;
+                
+                const response = await fetch(`/api/tasks/${taskId}`);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || data.message || '获取任务信息失败');
+                }
+                
+                const form = document.getElementById('editTaskForm');
+                
+                // 填充表单数据
+                form.name.value = data.name || '';
+                form.source_path.value = data.source_path || '';
+                form.remote_url.value = data.remote_url || '';
+                form.schedule.value = data.schedule || '';
+                form.webhook_url.value = data.webhook_url || '';
+                
+                // 设置认证方式
+                const authType = data.auth_type || 'token';
+                const authRadio = document.getElementById(`editAuth${authType.charAt(0).toUpperCase() + authType.slice(1)}`);
+                if (authRadio) {
+                    authRadio.checked = true;
+                    toggleAuthSection('edit', authType);
+                }
+                
+                // 设置SSH密钥
+                if (authType === 'ssh') {
+                    if (data.ssh_key_path) {
+                        const pathRadio = document.getElementById('editSshKeyPath');
+                        if (pathRadio) {
+                            pathRadio.checked = true;
+                            form.ssh_key_path.value = data.ssh_key_path;
+                            toggleSshKeySection('edit', 'path');
+                        }
+                    } else if (data.ssh_key_content) {
+                        const contentRadio = document.getElementById('editSshKeyContent');
+                        if (contentRadio) {
+                            contentRadio.checked = true;
+                            form.ssh_key_content.value = data.ssh_key_content;
+                            toggleSshKeySection('edit', 'content');
+                        }
+                    }
+                }
+                
+                editTaskModal.show();
+            } catch (error) {
+                console.error('编辑任务失败:', error);
+                showToast(error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 更新任务
+        async function updateTask() {
+            if (!currentTaskId) return;
+            
+            const form = document.getElementById('editTaskForm');
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                showToast('请填写所有必填字段', 'error');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const data = {};
+            
+            // 处理表单数据
+            for (const [key, value] of formData.entries()) {
+                if (value) {  // 只添加非空值
+                    data[key] = value;
+                }
+            }
+            
+            // 处理SSH密钥
+            if (data.auth_type === 'ssh') {
+                if (data.ssh_key_type === 'path') {
+                    delete data.ssh_key_content;
+                } else {
+                    delete data.ssh_key_path;
+                }
+            } else {
+                delete data.ssh_key_path;
+                delete data.ssh_key_content;
+            }
+            
+            try {
+                showLoading();
+                const response = await fetch(`/api/tasks/${currentTaskId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.message || '更新任务失败');
+                }
+
+                showToast('任务更新成功');
+                editTaskModal.hide();
+                form.classList.remove('was-validated');
+                
+                // 立即更新任务列表
+                await updateTaskList();
+            } catch (error) {
+                showToast(error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 删除任务
+        async function deleteTask(taskId) {
+            if (!await showConfirm('确定要删除这个任务吗？')) return;
+            
+            try {
+                showLoading();
+                const response = await fetch(`/api/tasks/${taskId}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.message || '删除任务失败');
+                }
+
+                showToast('任务删除成功');
+                updateTaskList();
+                } catch (error) {
+                showToast(error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 切换任务状态
+        async function toggleTask(taskId) {
+            try {
+                showLoading();
+                const response = await fetch(`/api/tasks/${taskId}/toggle`, {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.message || '切换任务状态失败');
+                }
+
+                showToast('任务状态已更新');
+                updateTaskList();
+            } catch (error) {
+                showToast(error.message, 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // 显示确认对话框
+        function showConfirm(message) {
+            return new Promise(resolve => {
+                const confirmed = window.confirm(message);
+                resolve(confirmed);
+            });
+        }
+
+        // 监听Socket.IO事件
+        socket.on('task_update', function(data) {
+            updateTaskList();
+        });
+
+        // 添加样式
+        const style = document.createElement('style');
+        style.textContent = `
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: none;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                transition: opacity 0.3s;
+            }
+            
+            .loading-spinner {
+                width: 3rem;
+                height: 3rem;
+            }
+            
+            .toast {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+            }
+            
+            .task-status {
+                display: inline-block;
+                padding: 0.25rem 0.5rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            
+            .status-enabled {
+                background-color: #d4edda;
+                color: #155724;
+            }
+            
+            .status-disabled {
+                background-color: #f8d7da;
+                color: #721c24;
+            }
+            
+            .task-actions {
+                display: flex;
+                gap: 0.5rem;
+            }
+            
+            .btn-icon {
+                width: 32px;
+                height: 32px;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .form-label {
+                font-weight: 500;
+            }
+            
+            .modal-header {
+                background-color: #f8f9fa;
+                border-bottom: 1px solid #dee2e6;
+            }
+            
+            .modal-footer {
+                background-color: #f8f9fa;
+                border-top: 1px solid #dee2e6;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 
